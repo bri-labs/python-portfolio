@@ -30,15 +30,10 @@ autogen_lab/
 │
 ├── tutorials/          # Guided learning: notebooks + practice scripts
 │   ├── basics/
-│   ├── agents/
-│   ├── rag/
-│   └── tools/
 │
 ├── projects/           # Portfolio-ready mini-systems
-│   ├── literature_review/
-│   ├── rag_pipeline/
-│   ├── multi_agent_chat/
-│   └── task_decomposition/
+│   ├── research_assistant_agent/
+│   └── TODO/
 │
 └── README.md
 ```

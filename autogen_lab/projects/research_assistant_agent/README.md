@@ -1,4 +1,4 @@
-# Literature Review Assistant (AutoGen + Streamlit)
+# Research Assistant AGent (AutoGen + Streamlit)
 
 A two‑agent AutoGen system that performs an automated literature review using the arXiv API.  
 The system consists of:
@@ -23,7 +23,7 @@ This project demonstrates tool‑augmented agents, multi‑agent orchestration, 
 ---
 
 ## 📂 Project Structure
-literature_review/
+research_assistant_agent/
 │
 ├── autogen_backend.py        # Multi-agent orchestration + arXiv tool
 ├── autogen_frontend_streamlit.py

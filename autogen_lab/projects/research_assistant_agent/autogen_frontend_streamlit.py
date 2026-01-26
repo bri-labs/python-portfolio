@@ -19,7 +19,7 @@ Run:
 import asyncio
 import streamlit as st
 
-from autogen_backend import run_litrev
+from autogen_lab.projects.research_assistant_agent.autogen_backend import run_litrev
 
 # Define UI
 st.set_page_config(page_title="Literature Review Assistant", page_icon="[BOOKS]")

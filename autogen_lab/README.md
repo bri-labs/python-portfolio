@@ -138,22 +138,3 @@ Launching notebooks:
 cd autogen_lab
 jupyter lab
 ```
-
----
-
-## 🤝 Contributing
-
-This lab is an evolving space for experimentation.  
-If you have suggestions, ideas, or find issues, feel free to open an issue or submit a PR.
-
-## 📜 License
-
-This project is licensed under the MIT License.  
-See the `LICENSE` file for details.
-
-
-## 👋 About
-
-Created and maintained by Brianna.  
-This lab is part of an ongoing exploration into agentic AI systems and practical multi‑agent workflows.
-

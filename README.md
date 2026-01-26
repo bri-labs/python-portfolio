@@ -51,7 +51,7 @@ You can explore projects independently or browse the entire portfolio to see how
 
 ## 📌 Running Projects
 Most projects assume:
-- Python 3.10+
+- Python 3.11
 - a virtual environment
 - a `.env` file for API keys (if needed)
 

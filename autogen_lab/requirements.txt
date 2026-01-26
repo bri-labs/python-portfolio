@@ -1,0 +1,11 @@
+autogen-agentchat
+autogen-core
+autogen-ext
+asyncio
+dotenv
+openai
+autogen-ext[openai]
+autogen-ext[ollama]
+autogen-ext[http-tool]
+arxiv
+streamlit

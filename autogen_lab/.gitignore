@@ -2,4 +2,5 @@
 **/*_venv*/
 .env
 __pycache__
-chroms_db*
+chroma_db*
+*.egg-info

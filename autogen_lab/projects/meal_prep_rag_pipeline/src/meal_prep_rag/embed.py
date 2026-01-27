@@ -3,6 +3,8 @@ import pandas as pd
 import chromadb
 import os
 import time
+import ast
+import json
 
 from dotenv import load_dotenv
 from chromadb.config import Settings
@@ -10,6 +12,7 @@ from chromadb.api.models import Collection
 from openai import OpenAI
 
 from meal_prep_rag.config import PROCESSED_DATA_PATH, VECTORSTORE_PATH, EMBEDDING_MODEL
+from meal_prep_rag.models.openai_embedding import OpenAIEmbeddingFunction
 
 EMBEDDING_BATCH_SIZE = 200
 # Load env variables
@@ -17,32 +20,7 @@ load_dotenv()
 API_KEY = os.getenv("OPENAI_API_KEY")
 if not API_KEY:
     raise ValueError("OPENAI_API_KEY not found in environment variables.")
-
-
-class OpenAIEmbeddingFunction:
-    def __init__(self, client, model: str):
-        self.client = client
-        self.model = model
-
-    # Chroma uses for embedding for embedding documents when adding to the collection
-    def __call__(self, input: list[str]) -> list[list[float]]:     
-        response = self.client.embeddings.create(
-            model=self.model,
-            input=input # whole batch
-        )
-        return [item.embedding for item in response.data]
-    
-    # Chroma uses for embedding queries when calling collection.query() 
-    def embed_query(self, input: list[str]) -> list[list[float]]: 
-        response = self.client.embeddings.create( 
-            model=self.model, 
-            input=input ) 
-        return [item.embedding for item in response.data]
-    
-    # chroma requires `name` for conflict detection
-    def name(self) -> str:
-        return f"openai={self.model}"
-        
+     
 def create_vectorstore(store_path):
     db_path = store_path / 'chroma_db_rag_recipes'
     print(f"++ Create Chroma Vector Store at `{db_path}`")
@@ -57,6 +35,11 @@ def create_vectorstore(store_path):
 def load_clean_data(csv_path: str):
     print("++ Load Clean CSV")
     df = pd.read_csv(csv_path)
+
+    # Convert list-looking string back into real lists
+    df["ingredients"] = df["ingredients"].apply(
+        lambda x: ast.literal_eval(x) if isinstance(x, str) else x
+    )
 
     return df
 
@@ -78,7 +61,7 @@ def generate_doc_col(df):
 def apply_metadata_col(row: dict) -> dict:
     metadata = {
         "title": row["title"],
-        "ingredients": row["ingredients"]
+        "ingredients": json.dumps(row['ingredients'])   # list -> JSON string
     }
     return metadata
 
@@ -144,8 +127,7 @@ def main():
 
     # Load clean CSV
     df = load_clean_data(PROCESSED_DATA_PATH)
-    df.shape
-
+    
     # Add additional columns
     df = generate_doc_col(df)
     df = generate_metadata_col(df)

@@ -4,15 +4,10 @@ This module is reponsible for loading the raw csv, cleaning the dataset,
 saving a cleaned CSV, adn converting rows into Pydantic Recipe models.
 """
 import pandas as pd
-from pydantic import BaseModel
-from typing import List
+import ast
 
 from meal_prep_rag.config import RAW_DATA_PATH, PROCESSED_DATA_PATH
-
-# Create Pydantic Recipe model
-class Recipe(BaseModel):
-    title: str
-    ingredients: List[str]
+from meal_prep_rag.models.pydantic_recipe import Recipe
 
 # Load CSV
 def load_csv(input_path:str, keep_columns:list = []) -> pd.DataFrame:
@@ -21,19 +16,33 @@ def load_csv(input_path:str, keep_columns:list = []) -> pd.DataFrame:
 
     return df
 
+def parse_ingredients(value):
+    # if it's alrady a list, just clean it
+    if isinstance(value, list):
+        return [i.strip() for i in value if i.strip()]
+    # if it's a string that looks like a list, parse it
+    if isinstance(value, str):
+        try:
+            parsed = ast.literal_eval(value)
+            if isinstance(parsed,list):
+                return [i.strip() for i in parsed if isinstance (i,str) and i.strip()]
+        except Exception:
+            return []   # fallback if parsing fails
+
 # Clean dataframe
 def clean_df(df:pd.DataFrame) -> pd.DataFrame:
-    df['ingredients'] = (
-        df['Cleaned_Ingredients']
-        .fillna("")
-        .apply(lambda x: [i.strip() for i in x.split(',') if i.strip()])
-    )
+    df['ingredients'] = df['Cleaned_Ingredients'].apply(parse_ingredients)
     df.drop(columns='Cleaned_Ingredients', inplace=True)
     df.rename(columns={'Title': 'title'}, inplace=True)
 
     # Drop rows missing title or ingredients
     df.dropna(subset=['title', 'ingredients'], inplace=True)
     print(f"Filter Null Shape: {df.shape}")
+
+    # Check type
+    sample = df['ingredients'].iloc[0]
+    if isinstance(sample, list):
+        print("Loaded ingredients as a list")
 
     return df
 

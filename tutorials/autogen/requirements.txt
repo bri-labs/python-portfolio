@@ -1,0 +1,15 @@
+autogen-agentchat
+autogen-core
+autogen-ext
+asyncio
+dotenv  # dotenv for environment variables
+openai  # OpenAI client
+autogen-ext[openai]
+autogen-ext[ollama]
+autogen-ext[http-tool]
+arxiv
+streamlit
+pyautogen # agent chat framework
+numpy<2.0
+chromadb<0.6    # ChromaDB for retrieval (used with rAG)
+tiktoken    # Embeddings/tokenization

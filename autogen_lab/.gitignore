@@ -1,6 +1,0 @@
-.DS_Store
-**/*_venv*/
-.env
-__pycache__
-chroma_db*
-*.egg-info

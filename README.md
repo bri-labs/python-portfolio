@@ -14,17 +14,18 @@ Each project is self‑contained, documented, and runnable.
 ## 📁 Repository Structure
 ```
 python-portfolio/
-│
-├── autogen_lab/        # Agentic AI learning lab + portfolio projects
-├── <future_project_1>/
-├── <future_project_2>/
-│
-└── README.md
+├── LICENSE
+├── projects
+│   ├── meal_prep_agent/
+│   └── research_assistant_agent/
+├── README.md
+└── tutorials
+    └── autogen
 ```
 
 ---
 
-## 🚀 Featured Project
+## 🚀 Featured Projects
 
 ### **🧪 autogen_lab**
 A structured learning lab and project playground for:

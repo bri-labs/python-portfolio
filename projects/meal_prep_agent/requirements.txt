@@ -1,0 +1,9 @@
+autogen-agentchat==0.7.5
+autogen-core==0.7.5
+autogen-ext==0.7.5
+asyncio==4.0.0
+dotenv==0.9.9
+openai==2.16.0
+autogen-ext[openai]
+streamlit==1.53.1
+chromadb==1.4.1

@@ -2,8 +2,8 @@
 name = "meal_prep_rag"
 version = "0.1.0"
 
-[tools.setuptools]
+[tool.setuptools]
 package-dir = {"" = "src"}
 
-[tools.setuptools.find]
+[tool.setuptools.packages.find]
 where = ["src"]

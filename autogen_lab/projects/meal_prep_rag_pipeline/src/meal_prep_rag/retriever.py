@@ -66,6 +66,77 @@ class Retriever:
         
         return recipes
     
+    ## REVISED RETRIEVER
+    # def retrieve(
+    #     self,
+    #     user_ingredients: List[str],
+    #     query: str = "",
+    #     n: int = 10
+    # ) -> List[Recipe]:
+    #     """
+    #     Retrieve recipes that match as many of the user's on-hand ingredients
+    #     as possible. Embeddings are used only as a secondary reranker.
+    #     """
+
+    #     # Normalize user ingredients
+    #     user_set = {u.lower() for u in user_ingredients}
+
+    #     # 1. Load all recipes from Chroma
+    #     all_results = self.collection.get(include=["metadatas"])
+    #     all_metas = all_results["metadatas"]
+
+    #     scored = []
+
+    #     for meta in all_metas:
+    #         # Decode ingredients
+    #         ingredients = meta.get("ingredients")
+    #         if isinstance(ingredients, str):
+    #             try:
+    #                 ingredients = json.loads(ingredients)
+    #             except Exception:
+    #                 continue
+
+    #         recipe_set = {i.lower() for i in ingredients}
+
+    #         # 2. Compute overlap score
+    #         overlap = len(recipe_set.intersection(user_set))
+
+    #         # Skip recipes with zero overlap
+    #         if overlap == 0:
+    #             continue
+
+    #         scored.append((meta, overlap))
+
+    #     # If nothing matches, fall back to embedding search
+    #     if not scored:
+    #         return self._vector_search(query, n)
+
+    #     # 3. Sort by overlap descending
+    #     scored.sort(key=lambda x: x[1], reverse=True)
+
+    #     # 4. Take top K candidates for embedding reranking
+    #     top_candidates = scored[:50]  # adjustable
+    #     candidate_ids = [meta["id"] for meta, _ in top_candidates]
+
+    #     # 5. Embedding search restricted to candidates
+    #     results = self.collection.query(
+    #         query_texts=[query],
+    #         n_results=n,
+    #         where={"id": {"$in": candidate_ids}}
+    #     )
+
+    #     # 6. Convert to Recipe objects
+    #     recipes = []
+    #     for meta in results["metadatas"][0]:
+    #         ingredients = meta.get("ingredients")
+    #         if isinstance(ingredients, str):
+    #             ingredients = json.loads(ingredients)
+
+    #         recipes.append(Recipe(title=meta["title"], ingredients=ingredients))
+
+    #     return recipes
+
+    
 
 
 if __name__ == "__main__":

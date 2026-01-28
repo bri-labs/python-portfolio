@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 from pathlib import Path
 
 CURRENT_FILE = Path(__file__).resolve()
@@ -15,3 +17,13 @@ VECTORSTORE_PATH = BASE_DIR / "vectorstore"
 
 # Embedding Model
 EMBEDDING_MODEL = "text-embedding-3-small"
+
+# Agent Model
+AGENT_MODEL = 'gpt-4o-mini'
+
+# Load .env once, at ocnfig import time
+load_dotenv()
+
+API_KEY = os.getenv("OPENAI_API_KEY")
+if not API_KEY:
+    raise ValueError("OPENAI_API_KEY not found in environment variables.")

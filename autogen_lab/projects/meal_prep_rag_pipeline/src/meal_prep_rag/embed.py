@@ -1,25 +1,18 @@
 # embed.py
 import pandas as pd
 import chromadb
-import os
 import time
 import ast
 import json
 
-from dotenv import load_dotenv
 from chromadb.config import Settings
 from chromadb.api.models import Collection
 from openai import OpenAI
 
-from meal_prep_rag.config import PROCESSED_DATA_PATH, VECTORSTORE_PATH, EMBEDDING_MODEL
+from meal_prep_rag.config import PROCESSED_DATA_PATH, VECTORSTORE_PATH, EMBEDDING_MODEL, API_KEY
 from meal_prep_rag.models.openai_embedding import OpenAIEmbeddingFunction
 
 EMBEDDING_BATCH_SIZE = 200
-# Load env variables
-load_dotenv()
-API_KEY = os.getenv("OPENAI_API_KEY")
-if not API_KEY:
-    raise ValueError("OPENAI_API_KEY not found in environment variables.")
      
 def create_vectorstore(store_path):
     db_path = store_path / 'chroma_db_rag_recipes'

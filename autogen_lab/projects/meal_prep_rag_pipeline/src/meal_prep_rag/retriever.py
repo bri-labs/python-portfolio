@@ -1,21 +1,13 @@
 # Vector search logic
-import os
 import chromadb
 import json
-from dotenv import load_dotenv
 from openai import OpenAI
 from chromadb.config import Settings
 from typing import List
 
-from meal_prep_rag.config import VECTORSTORE_PATH, EMBEDDING_MODEL
+from meal_prep_rag.config import VECTORSTORE_PATH, EMBEDDING_MODEL, API_KEY
 from meal_prep_rag.models.openai_embedding import OpenAIEmbeddingFunction
 from meal_prep_rag.models.pydantic_recipe import Recipe
-
-# Load env variables
-load_dotenv()
-API_KEY = os.getenv("OPENAI_API_KEY")
-if not API_KEY:
-    raise ValueError("OPENAI_API_KEY not found in environment variables.")
 
 class Retriever:
     def __init__(self, collection=None):
